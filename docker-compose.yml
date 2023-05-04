@@ -1,0 +1,38 @@
+version: "3.5"
+services:
+  mongodb-primary:
+    image: mongo:5.0
+    command: --bind_ip_all --replSet mongo-replica
+    networks:
+      mongodb_network:
+        aliases: 
+          - mongo-1
+    volumes:
+      - ./data/mongodb1:/data/modelDb
+    ports:
+      - 27017:27017
+
+  mongodb-secondary-1:
+    image: mongo:5.0
+    command: --bind_ip_all --replSet mongo-replica
+    networks:
+      mongodb_network:
+        aliases: 
+          - mongo-2
+    volumes:
+      - ./data/mongodb2:/data/modelDb
+
+  mongodb-secondary-2:
+    image: mongo:5.0
+    command: --bind_ip_all --replSet mongo-replica
+    networks:
+      mongodb_network:
+        aliases: 
+          - mongo-3
+    volumes:
+      - ./data/mongodb3:/data/modelDb
+
+
+networks:
+  mongodb_network:
+
